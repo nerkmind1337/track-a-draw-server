@@ -27,6 +27,7 @@ const io = new Server(httpServer, {
 const connectedClients: ConnectedClient[] = [];
 
 io.on("connection", (socket) => {
+  console.log('connected client', socket.id);
   // Add the new connection to the connectedClients list
   connectedClients.push({ playerId: socket.id, position: { x: 0, y: 0 } });
 
@@ -45,7 +46,7 @@ io.on("connection", (socket) => {
     if (client) {
       client.position = position;
     }
-
+    //console.log(socket.id, ' has updated their position to ', position);
     // Broadcast the updated position to all clients
     io.sockets.emit("playerHasBroadCastedTheirLocation", { playerId: socket.id, ...position });
   });
